@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COTworks VA Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --primary: #E4F64A;       /* Lemon Yellow */
+            --bg-dark: #1E1E1E;       /* Deep Off-Black background */
+            --card-dark: #2A2A2A;     /* Soft dark grey for cards */
+            --text-light: #F4F9FD;    /* Ghostly White text */
+            --text-muted: #A0A5A9;    /* Dimmed gray text */
+            --font-header: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-header);
+            font-weight: 700;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 80px 0 40px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 24px auto;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px auto;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-family: var(--font-header);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(228, 246, 74, 0.25);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* --- METRICS BADGES --- */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            gap: 20px;
+            justify-content: center;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .metric-num {
+            font-family: var(--font-header);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* --- SECTION GENERIC STYLES --- */
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 32px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        /* --- PROJECTS FILTER & GRID --- */
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-header);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .project-card {
+            background-color: var(--card-dark);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(228, 246, 74, 0.3);
+        }
+
+        .project-img-placeholder {
+            height: 180px;
+            background-color: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .project-img-placeholder svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--text-muted);
+        }
+
+        .project-content {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .project-link {
+            color: var(--primary);
+            font-family: var(--font-header);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background-color: var(--card-dark);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stars {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .client-info h4 {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .client-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- MILESTONES --- */
+        .milestones-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .milestone-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 24px;
+            border-radius: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .milestone-icon {
+            background-color: rgba(228, 246, 74, 0.1);
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .milestone-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--primary);
+        }
+
+        .milestone-details h3 {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+
+        .milestone-details p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESOURCES --- */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        .footer {
+            padding: 60px 0 20px 0;
+            text-align: center;
+        }
+
+        .footer-profile {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px auto;
+            border: 2px solid var(--primary);
+        }
+
+        .footer h2 {
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            gap: 16px;
+        }
+
+        .contact-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .contact-item:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 900px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid, .milestones-grid, .resources-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .contact-links {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <div class="profile-wrapper">
+                <svg class="profile-img" viewBox="0 0 100 100" style="background:#2a2a2a; padding:20px;">
+                    <path d="M50 50c11 0 20-9 20-20s-9-20-20-20-20 9-20 20 9 20 20 20zm0 8c-13.3 0-40 6.7-40 20v6h80v-6c0-13.3-26.7-20-40-20z" fill="#E4F64A"/>
+                </svg>
+            </div>
+            <h1>Hi, I'm Ojukwu.</h1>
+            <p>An innovative Assistant who helps Founders plan, organize, manage their workspace, and deliver projects with clarity and precision. I manage tech teams, product execution plans, and other businesses through high attention to detail, active task execution, and productivity.</p>
+            
+            <div class="btn-group">
+                <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="btn btn-primary">Resume</a>
+                <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="btn btn-secondary">Get in Touch</a>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-num">40+</span>
+                    <span class="metric-label">Tasks Done</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-num">8+</span>
+                    <span class="metric-label">Clients Served</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-num">100%</span>
+                    <span class="metric-label">Satisfaction</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2 class="section-title">Projects</h2>
+        
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterProjects('all')">All Work</button>
+            <button class="tab-btn" onclick="filterProjects('pm')">Product Management</button>
+            <button class="tab-btn" onclick="filterProjects('research')">Market Research</button>
+            <button class="tab-btn" onclick="filterProjects('design')">Design & Ops</button>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card" data-category="pm">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">FlareTag Platform Launch</h3>
+                        <p class="project-desc">Designed automated multi-stage onboarding flows, custom trigger sequences, and badge delivery workflows for sudden user scaling events.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Check Out &rarr;</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="design">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm1 14h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">Deen AI Onboarding</h3>
+                        <p class="project-desc">Engineered high-retention onboarding drip flows and notification matrices for specialized AI tool communities.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Check Out &rarr;</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="research">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">Mid-Market Denmark Tech Map</h3>
+                        <p class="project-desc">Conducted granular target parsing and quantitative scraping of Danish tech firms and recruitment frameworks strictly matching micro-caps under 200 members.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Check Out &rarr;</a>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="pm">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">TechiesMatch Verification Ops</h3>
+                        <p class="project-desc">Built administrative scoring frameworks and verified identity management protocols for secure, voice-first collaborative ecosystems.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Check Out &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Testimonials</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Exceptional execution on mapping out our complex operational tasks. Highly organized, autonomous, and kept communication fluid."</p>
+                <div class="client-info">
+                    <h4>Ahmad S.</h4>
+                    <p>Product Lead, Indonesia</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Ojukwu structured our cross-functional workflow pipelines seamlessly. The clarity in setting up automation logic saved us weeks."</p>
+                <div class="client-info">
+                    <h4>Samuel K.</h4>
+                    <p>Operations Specialist</p>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"A master at structured thinking. Took complete ownership of data parsing and pipeline execution without needing micro-management."</p>
+                <div class="client-info">
+                    <h4>Balke Q.</h4>
+                    <p>Founder, SaaS Platform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Major Milestones</h2>
+        <div class="milestones-grid">
+            <div class="milestone-card">
+                <div class="milestone-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.99 5.99 0 0 0 11 15.91V19H9v2h6v-2h-2v-3.09c1.73-.37 3.22-1.4 3.96-2.97 2.47-.31 4.39-2.4 4.39-4.94V7c0-1.1-.9-2-2-2zM5 7h2v3H5V7zm14 3h-2V7h2v3z"/></svg>
+                </div>
+                <div class="milestone-details">
+                    <h3>Top Growth Award</h3>
+                    <p>Recognized for outstanding operational efficiency and project coordination structures across agile remote environments.</p>
+                </div>
+            </div>
+            <div class="milestone-card">
+                <div class="milestone-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                </div>
+                <div class="milestone-details">
+                    <h3>Agile Lead</h3>
+                    <p>Successfully managed over 15 distinct asynchronous operational tracks concurrently with zero missed deadlines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Resources</h2>
+        <div class="resources-grid">
+            <div class="project-card">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">10 Notion System Hacks</h3>
+                        <p class="project-desc">A detailed handbook revealing database setups used to track milestones, build client logs, and automate cross-team sync schedules.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Read Guide &rarr;</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img-placeholder">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </div>
+                <div class="project-content">
+                    <div>
+                        <h3 class="project-title">My Transition Blueprint</h3>
+                        <p class="project-desc">A step-by-step breakdown of managing remote technical programs and orchestrating global client delivery structures.</p>
+                    </div>
+                    <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="project-link">Read Blueprint &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer container">
+        <div class="profile-wrapper" style="width:80px; height:80px; margin-bottom:16px;">
+            <svg class="profile-img" viewBox="0 0 100 100" style="width:80px; height:80px; background:#2a2a2a; padding:10px;">
+                <path d="M50 50c11 0 20-9 20-20s-9-20-20-20-20 9-20 20 9 20 20 20zm0 8c-13.3 0-40 6.7-40 20v6h80v-6c0-13.3-26.7-20-40-20z" fill="#E4F64A"/>
+            </svg>
+        </div>
+        <h2>Let's build something organized together.</h2>
+        
+        <div class="contact-links">
+            <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="contact-item">LinkedIn</a>
+            <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="contact-item">Email</a>
+            <a href="https://linkedin.com/in/ojukwuii" target="_blank" class="contact-item">Twitter</a>
+        </div>
+        
+        <p class="copyright">&copy; 2026 COTworks. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function filterProjects(category) {
+            // Update active state on tab buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter project cards
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                // If it's the resources section card, it won't have a data-category, ignore it
+                if(!cardCategory) return; 
+
+                if (category === 'all' || cardCategory === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
