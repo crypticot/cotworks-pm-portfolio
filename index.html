@@ -235,9 +235,11 @@
             background: radial-gradient(circle, rgba(228,246,74,0.055) 0%, transparent 70%);
             transition: opacity 0.4s ease;
             opacity: 0;
+			mix-blend-mode: screen; /* Keeps it glowing nicely over dark surfaces */
         }
         body.light .cursor-glow {
-            background: radial-gradient(circle, rgba(180,200,0,0.045) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(200,220,0,0.16) 0%, transparent 65%);
+			mix-blend-mode: multiply; /* Crucial! "Multiply" blends the light yellow into the gray paper, creating a deep, premium spotlight effect */
         }
 
         /* ========================================================
@@ -645,7 +647,7 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             max-width: 600px;
             margin: 0 auto 40px;
             gap: 12px;
@@ -1129,9 +1131,8 @@
             <nav class="contact-grid" aria-label="Contact links">
                 <a href="mailto:cotworks@gmail.com"         class="contact-item" aria-label="Send an email">Email</a>
                 <a href="tel:+2348168824702"                   class="contact-item" aria-label="Call by phone">Phone</a>
-                <a href="https://wa.me/+2348168824702"          class="contact-item" aria-label="Message on WhatsApp" target="_blank" rel="noopener">WhatsApp</a>
                 <a href="https://linkedin.com/in/ojukwuii"     class="contact-item" aria-label="Connect on LinkedIn" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="https://thecoticle.wordpress.com"     class="contact-item" aria-label="Connect on LinkedIn" target="_blank" rel="noopener">Blog</a>
+                <a href="https://thecoticle.wordpress.com"     class="contact-item" aria-label="Visit the Blog" target="_blank" rel="noopener">Blog</a>
             </nav>
 
             <p class="copyright">&copy; 2026 Chidubem Ojukwu. All rights reserved.</p>
@@ -1145,7 +1146,7 @@
 	<div id="contact-page-view" style="display: none; min-height: 100vh; background: var(--bg); padding-top: 40px;">
 		<section class="container" style="padding: 40px 24px; max-width: 800px; margin: 0 auto;">
 			<button onclick="navigateToPage('portfolio-page')" style="background: transparent; border: none; color: var(--primary); font-family: var(--font-head); font-weight: 700; cursor: pointer; margin-bottom: 32px; display: inline-flex; align-items: center; gap: 8px; font-size: 1rem;">
-				&larr; Back to Portfolio
+				Back to Portfolio
 			</button>
 			
 			<div style="background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 16px; box-shadow: var(--shadow);">
@@ -1334,24 +1335,30 @@
     </script>
 
 <script>
-    function navigateToPage(targetPage) {
-        const portfolioView = document.getElementById('main-portfolio-view');
-        const contactView = document.getElementById('contact-page-view');
-        
-        if (targetPage === 'contact-page') {
-            portfolioView.style.display = 'none';
-            contactView.style.display = 'block';
-            // Reset the form state just in case they are opening it again
-            document.getElementById('form-container').style.display = 'block';
-            document.getElementById('success-container').style.display = 'none';
-            window.scrollTo(0, 0);
-        } else if (targetPage === 'portfolio-page') {
-            contactView.style.display = 'none';
-            portfolioView.style.display = 'block';
-            window.scrollTo(0, 0);
-        }
+function navigateToPage(targetPage) {
+    const portfolioView = document.getElementById('main-portfolio-view');
+    const contactView = document.getElementById('contact-page-view');
+    
+    if (targetPage === 'contact-page') {
+        portfolioView.style.display = 'none';
+        contactView.style.display = 'block';
+        document.getElementById('form-container').style.display = 'block';
+        document.getElementById('success-container').style.display = 'none';
+        window.scrollTo(0, 0);
+    } else if (targetPage === 'portfolio-page') {
+        contactView.style.display = 'none';
+        portfolioView.style.display = 'block';
     }
+}
 
+// AUTOMATIC NAV LINKS LISTENER
+// This finds any link on your site pointing to a section anchor (starting with #)
+// and forces the portfolio view to activate instantly when clicked.
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function() {
+        navigateToPage('portfolio-page');
+    });
+});
     // AJAX Formspree Handling for Custom Success Message
     document.getElementById('portfolio-contact-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Stop standard redirect page navigation
