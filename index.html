@@ -35,15 +35,15 @@
         /* ========================================================
            LIGHT MODE
         ======================================================== */
-        body.light {
-            --primary: #C8DC00;
-            --bg: #F5F5F0;
-            --bg-alt: #EDEEE8;
-            --card: #FFFFFF;
-            --card-hover: #F8F8F4;
-            --border: rgba(0,0,0,0.08);
-            --text: #1A1A1A;
-            --text-muted: #6B7280;
+		body.light {
+            --primary: #879600;           /* FIXED: A darker, rich pear green that passes WCAG AA on light backgrounds */
+            --bg: #F5F5F0;                
+            --bg-alt: #EDEEE8;            
+            --card: #FFFFFF;              
+            --card-hover: #F8F8F4;        
+            --border: rgba(0,0,0,0.08);   
+            --text: #1A1A1A;              
+            --text-muted: #535A66;        /* FIXED for compliance */
             --shadow: 0 4px 24px rgba(0,0,0,0.10);
             --noise-opacity: 0.018;
         }
@@ -135,6 +135,7 @@
             font-size: 1rem;
             color: var(--primary);
             letter-spacing: -0.3px;
+			cursor: pointer; /* Makes it feel like a real link */
         }
 
         .nav-links {
@@ -714,7 +715,7 @@
     ==================================================== -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="navbar-inner">
-            <span class="nav-logo">COTworks</span>
+            <a href="#" class="nav-logo" onclick="navigateToPage('portfolio-page')">COTworks</a>
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="#skills">Skills</a></li>
@@ -1135,7 +1136,7 @@
                 <a href="https://thecoticle.wordpress.com"     class="contact-item" aria-label="Visit the Blog" target="_blank" rel="noopener">Blog</a>
             </nav>
 
-            <p class="copyright">&copy; 2026 Chidubem Ojukwu. All rights reserved.</p>
+            <p class="copyright">&copy; 2026 COTworks. All rights reserved.</p>
         </div>
     </footer>
 	</div>
