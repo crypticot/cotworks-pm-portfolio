@@ -787,15 +787,15 @@
 				<!-- Metrics Grid -->
 				<div class="metrics-grid" role="list" aria-label="Key statistics">
 					<div class="metric-card" role="listitem">
-						<span class="metric-num">11</span>
+						<span class="metric-num" data-target="11">0</span>
 						<span class="metric-label">Jobs Completed</span>
 					</div>
 					<div class="metric-card" role="listitem">
-						<span class="metric-num">80%</span>
+						<span class="metric-num" data-target="80" data-suffix="%">0</span>
 						<span class="metric-label">Avg Rating</span>
 					</div>
 					<div class="metric-card" role="listitem">
-						<span class="metric-num">1</span>
+						<span class="metric-num" data-target="1">0</span>
 						<span class="metric-label">Product Launch</span>
 					</div>
 				</div>
@@ -1197,201 +1197,224 @@
 		</section>
 	</div>
 
-    <!-- ====================================================
-         JAVASCRIPT
-    ==================================================== -->
-    <script>
-    (function() {
+	<script>
+		(function() {
 
-        /* ---------- THEME TOGGLE ---------- */
-        const body        = document.body;
-        const toggle      = document.getElementById('themeToggle');
-        const savedTheme  = localStorage.getItem('theme');
+			/* ---------- THEME TOGGLE ---------- */
+			const body        = document.body;
+			const toggle      = document.getElementById('themeToggle');
+			const savedTheme  = localStorage.getItem('theme');
 
-        if (savedTheme === 'light') body.classList.add('light');
+			if (savedTheme === 'light') body.classList.add('light');
 
-        toggle.addEventListener('click', function() {
-            body.classList.toggle('light');
-            localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
-        });
+			toggle.addEventListener('click', function() {
+				body.classList.toggle('light');
+				localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+			});
 
 
-        /* ---------- HAMBURGER NAV ---------- */
-        const hamburger = document.getElementById('hamburger');
-        const navLinks  = document.getElementById('navLinks');
+			/* ---------- HAMBURGER NAV ---------- */
+			const hamburger = document.getElementById('hamburger');
+			const navLinks  = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', function() {
-            const isOpen = navLinks.classList.toggle('open');
-            hamburger.setAttribute('aria-expanded', isOpen);
-        });
+			hamburger.addEventListener('click', function() {
+				const isOpen = navLinks.classList.toggle('open');
+				hamburger.setAttribute('aria-expanded', isOpen);
+			});
 
-        navLinks.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navLinks.classList.remove('open');
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
-        });
-
-
-        /* ---------- CURSOR GLOW ---------- */
-        const glow = document.getElementById('cursorGlow');
-        let glowVisible = false;
-
-        document.addEventListener('mousemove', function(e) {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top  = e.clientY + 'px';
-            if (!glowVisible) {
-                glow.style.opacity = '1';
-                glowVisible = true;
-            }
-        });
-
-        document.addEventListener('mouseleave', function() {
-            glow.style.opacity = '0';
-            glowVisible = false;
-        });
+			navLinks.querySelectorAll('a').forEach(function(link) {
+				link.addEventListener('click', function() {
+					navLinks.classList.remove('open');
+					hamburger.setAttribute('aria-expanded', 'false');
+				});
+			});
 
 
-        /* ---------- SCROLL REVEAL ---------- */
-        const reveals = document.querySelectorAll('.reveal');
+			/* ---------- CURSOR GLOW ---------- */
+			const glow = document.getElementById('cursorGlow');
+			let glowVisible = false;
 
-        const revealObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12 });
+			document.addEventListener('mousemove', function(e) {
+				glow.style.left = e.clientX + 'px';
+				glow.style.top  = e.clientY + 'px';
+				if (!glowVisible) {
+					glow.style.opacity = '1';
+					glowVisible = true;
+				}
+			});
 
-        reveals.forEach(function(el) { revealObserver.observe(el); });
-
-
-        /* ---------- SKILL BAR ANIMATION ---------- */
-        const skillBars     = document.querySelectorAll('.skill-fill');
-        let barsAnimated    = false;
-
-        const barObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting && !barsAnimated) {
-                    barsAnimated = true;
-                    skillBars.forEach(function(bar) {
-                        bar.style.width = bar.getAttribute('data-width') + '%';
-                    });
-                    barObserver.disconnect();
-                }
-            });
-        }, { threshold: 0.3 });
-
-        const skillSection = document.getElementById('skills');
-        if (skillSection) barObserver.observe(skillSection);
+			document.addEventListener('mouseleave', function() {
+				glow.style.opacity = '0';
+				glowVisible = false;
+			});
 
 
-        /* ---------- UNIFIED TAB SWITCHER ---------- */
-        window.switchTab = function(tabId) {
-            // Find which tab-row the clicked button belongs to
-            const clickedBtn = event.currentTarget || event.target;
+			/* ---------- SCROLL REVEAL ---------- */
+			const reveals = document.querySelectorAll('.reveal');
 
-            // Find sibling buttons in the same tab-row
-            const tabRow = clickedBtn.closest('.tab-row');
-            if (!tabRow) return;
+			const revealObserver = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+						revealObserver.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.12 });
 
-            const siblingBtns   = tabRow.querySelectorAll('.tab-pill');
-            const parentSection = tabRow.closest('section') || tabRow.parentElement;
+			reveals.forEach(function(el) { revealObserver.observe(el); });
 
-            // Deactivate all sibling tabs
-            siblingBtns.forEach(function(btn) {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
-            });
 
-            // Activate clicked tab
-            clickedBtn.classList.add('active');
-            clickedBtn.setAttribute('aria-selected', 'true');
+			/* ---------- SKILL BAR ANIMATION ---------- */
+			const skillBars     = document.querySelectorAll('.skill-fill');
+			let barsAnimated    = false;
 
-            // Find panels that belong to this section and deactivate them
-            const panels = parentSection.querySelectorAll('.tab-panel');
-            panels.forEach(function(panel) {
-                panel.classList.remove('active');
-            });
+			const barObserver = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting && !barsAnimated) {
+						barsAnimated = true;
+						skillBars.forEach(function(bar) {
+							bar.style.width = bar.getAttribute('data-width') + '%';
+						});
+						barObserver.disconnect();
+					}
+				});
+			}, { threshold: 0.3 });
 
-            // Activate the target panel
-            const targetPanel = document.getElementById('panel-' + tabId);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
+			const skillSection = document.getElementById('skills');
+			if (skillSection) barObserver.observe(skillSection);
 
-                // Re-run bar animation if switching to tools tab
-                if (tabId === 'tools') {
-                    barsAnimated = false;
-                    setTimeout(function() {
-                        skillBars.forEach(function(bar) {
-                            bar.style.width = bar.getAttribute('data-width') + '%';
-                        });
-                    }, 50);
-                }
-            }
-        };
 
-    })();
-    </script>
+			/* ---------- UNIFIED TAB SWITCHER ---------- */
+			window.switchTab = function(tabId) {
+				const clickedBtn = event.currentTarget || event.target;
+				const tabRow = clickedBtn.closest('.tab-row');
+				if (!tabRow) return;
 
-<script>
-function navigateToPage(targetPage) {
-    const portfolioView = document.getElementById('main-portfolio-view');
-    const contactView = document.getElementById('contact-page-view');
-    
-    if (targetPage === 'contact-page') {
-        portfolioView.style.display = 'none';
-        contactView.style.display = 'block';
-        document.getElementById('form-container').style.display = 'block';
-        document.getElementById('success-container').style.display = 'none';
-        window.scrollTo(0, 0);
-    } else if (targetPage === 'portfolio-page') {
-        contactView.style.display = 'none';
-        portfolioView.style.display = 'block';
-    }
-}
+				const siblingBtns   = tabRow.querySelectorAll('.tab-pill');
+				const parentSection = tabRow.closest('section') || tabRow.parentElement;
 
-// AUTOMATIC NAV LINKS LISTENER
-// This finds any link on your site pointing to a section anchor (starting with #)
-// and forces the portfolio view to activate instantly when clicked.
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', function() {
-        navigateToPage('portfolio-page');
-    });
-});
-    // AJAX Formspree Handling for Custom Success Message
-    document.getElementById('portfolio-contact-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Stop standard redirect page navigation
-        
-        const form = event.target;
-        const button = document.getElementById('submit-btn');
-        const data = new FormData(form);
-        
-        button.textContent = "Sending...";
-        button.disabled = true;
+				siblingBtns.forEach(function(btn) {
+					btn.classList.remove('active');
+					btn.setAttribute('aria-selected', 'false');
+				});
 
-        fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        }).then(response => {
-            if (response.ok) {
-                // Smoothly swap to success view
-                document.getElementById('form-container').style.display = 'none';
-                document.getElementById('success-container').style.display = 'block';
-                form.reset();
-            } else {
-                alert("Ops! There was a problem submitting your form. Please try again.");
-            }
-        }).catch(error => {
-            alert("Connection error. Please try again later.");
-        }).finally(() => {
-            button.textContent = "Send Message";
-            button.disabled = false;
-        });
-    });
-</script>
+				clickedBtn.classList.add('active');
+				clickedBtn.setAttribute('aria-selected', 'true');
+
+				const panels = parentSection.querySelectorAll('.tab-panel');
+				panels.forEach(function(panel) {
+					panel.classList.remove('active');
+				});
+
+				const targetPanel = document.getElementById('panel-' + tabId);
+				if (targetPanel) {
+					targetPanel.classList.add('active');
+
+					if (tabId === 'tools') {
+						barsAnimated = false;
+						setTimeout(function() {
+							skillBars.forEach(function(bar) {
+								bar.style.width = bar.getAttribute('data-width') + '%';
+							});
+						}, 50);
+					}
+				}
+			};
+
+		})();
+		</script>
+
+	<script>
+	function navigateToPage(targetPage) {
+		const portfolioView = document.getElementById('main-portfolio-view');
+		const contactView = document.getElementById('contact-page-view');
+		
+		if (targetPage === 'contact-page') {
+			portfolioView.style.display = 'none';
+			contactView.style.display = 'block';
+			document.getElementById('form-container').style.display = 'block';
+			document.getElementById('success-container').style.display = 'none';
+			window.scrollTo(0, 0);
+		} else if (targetPage === 'portfolio-page') {
+			contactView.style.display = 'none';
+			portfolioView.style.display = 'block';
+		}
+	}
+
+	// AUTOMATIC NAV LINKS LISTENER
+	document.querySelectorAll('a[href^="#"]').forEach(link => {
+		link.addEventListener('click', function() {
+			navigateToPage('portfolio-page');
+		});
+	});
+
+		// AJAX Formspree Handling for Custom Success Message
+		document.getElementById('portfolio-contact-form').addEventListener('submit', function(event) {
+			event.preventDefault(); 
+			
+			const form = event.target;
+			const button = document.getElementById('submit-btn');
+			const data = new FormData(form);
+			
+			button.textContent = "Sending...";
+			button.disabled = true;
+
+			fetch(form.action, {
+				method: form.method,
+				body: data,
+				headers: { 'Accept': 'application/json' }
+			}).then(response => {
+				if (response.ok) {
+					document.getElementById('form-container').style.display = 'none';
+					document.getElementById('success-container').style.display = 'block';
+					form.reset();
+				} else {
+					alert("Ops! There was a problem submitting your form. Please try again.");
+				}
+			}).catch(error => {
+				alert("Connection error. Please try again later.");
+			}).finally(() => {
+				button.textContent = "Send Message";
+				button.disabled = false;
+			});
+		});
+
+		// ========================================================
+		// STANDALONE METRIC COUNTER ANIMATION ENGINE
+		// ========================================================
+		function runMetricCounters() {
+			const metricElements = document.querySelectorAll('.metric-num[data-target]');
+			
+			metricElements.forEach(element => {
+				const targetValue = +element.getAttribute('data-target');
+				const suffixString = element.getAttribute('data-suffix') || '';
+				const totalDuration = 1500; // Animation running time (1.5 seconds)
+				const startTimestamp = performance.now();
+
+				function updateFrame(currentTimestamp) {
+					const elapsed = currentTimestamp - startTimestamp;
+					const progress = Math.min(elapsed / totalDuration, 1);
+					
+					// Smooth easing deceleration (fast start, smooth finish)
+					const easeOutQuad = progress * (2 - progress);
+					const currentCalculatedValue = Math.floor(easeOutQuad * targetValue);
+
+					element.textContent = currentCalculatedValue + suffixString;
+
+					if (progress < 1) {
+						requestAnimationFrame(updateFrame);
+					} else {
+						element.textContent = targetValue + suffixString; // Guarantee it hits target perfectly
+					}
+				}
+
+				requestAnimationFrame(updateFrame);
+			});
+		}
+
+		// Fire counter immediately on active window load status
+		window.addEventListener('load', runMetricCounters);
+	</script>
 
 </body>
 </html>
